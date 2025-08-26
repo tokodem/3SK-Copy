@@ -149,11 +149,7 @@ const LoginForm = () => {
             </form>
 
             <div className="mt-6 text-center space-y-4">
-              <div className="text-sm text-gray-600">
-                <div>Demo accounts (password: password123):</div>
-                <div>Customer: john@email.com</div>
-                <div>Admin: admin@3sk.com</div>
-              </div>
+              
               
               <div className="text-sm">
                 <span className="text-gray-600">Don't have an account? </span>
