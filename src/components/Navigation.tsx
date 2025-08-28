@@ -61,10 +61,10 @@ const Navigation = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <Car className="h-8 w-8 text-blue-600" />
+            <img src="images/cover3.jpg" alt="3SK Investment" className="h-10 w-15" />
             <div>
               <h1 className="text-xl font-bold text-gray-900">3SK Investment</h1>
-              <p className="text-xs text-gray-600">Japanese Vehicle Specialists</p>
+              <p className="text-xs text-gray-600">Your Japanese Vehicle Specialists</p>
             </div>
           </Link>
 
