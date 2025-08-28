@@ -139,7 +139,7 @@ const SignupForm = () => {
         <Card className="shadow-xl border-0">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">
-              Join 3SK Investment
+              Join 3SK Investment Ltd
             </CardTitle>
             <CardDescription className="text-center">
               Create your customer account to access exclusive car listings, save favorites, and connect with our team
@@ -330,17 +330,11 @@ const SignupForm = () => {
                   Sign in here
                 </Link>
               </div>
-              
-              <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
-                <p className="font-medium text-gray-700 mb-1">💼 Looking to join our team?</p>
-                <p>Team member accounts are created by our administrators. Contact your manager or HR department for access.</p>
-              </div>
-              
+
               <div className="text-sm">
                 <Link
                   to="/"
                   className="text-gray-600 hover:text-gray-700 font-medium hover:underline">
-
                   ← Back to website
                 </Link>
               </div>
