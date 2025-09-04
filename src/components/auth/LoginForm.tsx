@@ -90,6 +90,7 @@ const LoginForm = () => {
                 <Label htmlFor="email">Email address</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="Enter your email"
                   value={email}
@@ -105,6 +106,7 @@ const LoginForm = () => {
                 <div className="relative">
                   <Input
                     id="password"
+                    name="password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
                     value={password}

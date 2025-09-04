@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import supabase from '@/lib/supabaseClient';
 
 interface User {
   id: string;
@@ -15,6 +16,14 @@ interface User {
     priceRange: {min: number;max: number;};
   };
 }
+
+// Supabase user metadata shape
+type SupabaseUserMetadata = {
+  name?: string;
+  userType?: 'customer' | 'employee' | 'admin';
+  role?: 'Customer' | 'Admin' | 'Manager' | 'Editor' | 'Sales' | 'Support';
+  phone?: string;
+};
 
 interface AuthContextType {
   user: User | null;
@@ -72,8 +81,8 @@ const rolePermissions = {
 
 };
 
-// Mock users for demonstration
-const mockUsers: User[] = [
+// Mock users for demonstration (seeded users)
+const seededUsers: User[] = [
 // Admin users
 {
   id: '1',
@@ -120,61 +129,151 @@ const mockUsers: User[] = [
   }
 }];
 
+// Storage key for mock users
+const MOCK_USERS_KEY = '3sk_mock_users';
 
+
+
+// Helper functions for mock user persistence
+const getMockUsers = (): User[] => {
+  try {
+    const stored = localStorage.getItem(MOCK_USERS_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return Array.isArray(parsed) ? parsed : seededUsers;
+    }
+    // Initialize with seeded users if no stored users
+    localStorage.setItem(MOCK_USERS_KEY, JSON.stringify(seededUsers));
+    return seededUsers;
+  } catch {
+    return seededUsers;
+  }
+};
+
+const saveMockUsers = (users: User[]) => {
+  localStorage.setItem(MOCK_USERS_KEY, JSON.stringify(users));
+};
+
+const findMockUserByEmail = (email: string): User | undefined => {
+  const users = getMockUsers();
+  return users.find(u => u.email.toLowerCase() === email.toLowerCase());
+};
 
 export const AuthProvider = ({ children }: {children: ReactNode;}) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored auth
-    const storedAuth = localStorage.getItem('3sk_auth');
-    if (storedAuth) {
-      try {
-        const authData = JSON.parse(storedAuth);
-        const foundUser = mockUsers.find((u) => u.email === authData.email);
-        if (foundUser) {
-          setUser(foundUser);
+    // If Supabase is configured, initialize from session and subscribe
+    if (supbaseAvailable()) {
+      const init = async () => {
+        try {
+          const { data } = await supabase!.auth.getUser();
+          if (data.user) {
+            setUser(mapSupabaseUserToUser(data.user));
+          }
+        } catch (error) {
+          console.error('Supabase auth init failed:', error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Auth restoration failed:', error);
-        localStorage.removeItem('3sk_auth');
+      };
+      init();
+
+      const { data: sub } = supabase!.auth.onAuthStateChange((_event, session) => {
+        if (session?.user) {
+          setUser(mapSupabaseUserToUser(session.user));
+        } else {
+          setUser(null);
+        }
+      });
+      return () => {
+        sub.subscription.unsubscribe();
+      };
+    } else {
+      // Fallback to local mock storage
+      const storedAuth = localStorage.getItem('3sk_auth');
+      if (storedAuth) {
+        try {
+          const authData = JSON.parse(storedAuth);
+          const foundUser = findMockUserByEmail(authData.email);
+          if (foundUser) {
+            setUser(foundUser);
+          }
+        } catch (error) {
+          console.error('Auth restoration failed:', error);
+          localStorage.removeItem('3sk_auth');
+        }
       }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
+    if (supbaseAvailable()) {
+      try {
+        const { error } = await supabase!.auth.signInWithPassword({ email, password });
+        if (error) {
+          setIsLoading(false);
+          return { success: false, error: error.message };
+        }
+        setIsLoading(false);
+        return { success: true };
+      } catch (e: any) {
+        setIsLoading(false);
+        return { success: false, error: e?.message || 'Login failed' };
+      }
+    }
 
-    // Simulate API call
+    // Fallback: mock users
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const foundUser = mockUsers.find((u) => u.email === email);
-
+    const foundUser = findMockUserByEmail(email);
     if (!foundUser) {
       setIsLoading(false);
       return { success: false, error: 'User not found' };
     }
-
-    // In a real app, you'd verify the password hash
-    // Default password for demo: 'password123'
     if (password !== 'password123') {
       setIsLoading(false);
       return { success: false, error: 'Invalid password' };
     }
-
     setUser(foundUser);
     localStorage.setItem('3sk_auth', JSON.stringify({ email, timestamp: Date.now() }));
     setIsLoading(false);
-
     return { success: true };
   };
 
   const signup = async (userData: SignupData) => {
     setIsLoading(true);
+    if (supbaseAvailable()) {
+      try {
+        const emailRedirectTo = `${window.location.origin}/auth/callback`;
+        const { error } = await supabase!.auth.signUp({
+          email: userData.email,
+          password: userData.password,
+          options: {
+            emailRedirectTo,
+            data: {
+              name: userData.name,
+              userType: 'customer',
+              role: 'Customer',
+              phone: userData.phone
+            } as SupabaseUserMetadata
+          }
+        });
+        setIsLoading(false);
+        if (error) {
+          return { success: false, error: error.message };
+        }
+        // Supabase sends a confirmation email.
+        return { success: true };
+      } catch (e: any) {
+        setIsLoading(false);
+        return { success: false, error: e?.message || 'Signup failed' };
+      }
+    }
 
-    // Simulate API call
+    // Fallback: mock users
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (userData.password !== userData.confirmPassword) {
@@ -182,7 +281,7 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
       return { success: false, error: 'Passwords do not match' };
     }
 
-    if (mockUsers.find((u) => u.email === userData.email)) {
+    if (findMockUserByEmail(userData.email)) {
       setIsLoading(false);
       return { success: false, error: 'Email already registered' };
     }
@@ -204,7 +303,11 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
       }
     };
 
-    mockUsers.push(newUser);
+    // Add to persistent storage
+    const currentUsers = getMockUsers();
+    currentUsers.push(newUser);
+    saveMockUsers(currentUsers);
+    
     setUser(newUser);
     localStorage.setItem('3sk_auth', JSON.stringify({ email: userData.email, timestamp: Date.now() }));
     setIsLoading(false);
@@ -214,21 +317,22 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
 
   const createTeamMember = async (userData: TeamMemberData) => {
     setIsLoading(true);
+    if (supbaseAvailable()) {
+      // Creating employees/admins requires service role via server. Not supported on client.
+      setIsLoading(false);
+      return { success: false, error: 'Not supported from client. Use a secure admin endpoint.' };
+    }
 
-    // Only admins can create team members
+    // Fallback mock behavior
     if (!user || !isAdmin()) {
       setIsLoading(false);
       return { success: false, error: 'Unauthorized: Only administrators can create team members' };
     }
-
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    if (mockUsers.find((u) => u.email === userData.email)) {
+    if (findMockUserByEmail(userData.email)) {
       setIsLoading(false);
       return { success: false, error: 'Email already registered' };
     }
-
     const newUser: User = {
       id: Date.now().toString(),
       name: userData.name,
@@ -239,17 +343,49 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
       avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face`,
       phone: userData.phone
     };
-
-    mockUsers.push(newUser);
+    
+    // Add to persistent storage
+    const currentUsers = getMockUsers();
+    currentUsers.push(newUser);
+    saveMockUsers(currentUsers);
+    
     setIsLoading(false);
-
     return { success: true };
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('3sk_auth');
+    if (supbaseAvailable()) {
+      supabase!.auth.signOut();
+    } else {
+      setUser(null);
+      localStorage.removeItem('3sk_auth');
+    }
   };
+
+  function supbaseAvailable() {
+    return Boolean(supabase);
+  }
+
+  function mapSupabaseUserToUser(sbUser: { id: string; email?: string; user_metadata?: SupabaseUserMetadata; }): User {
+    const meta = (sbUser.user_metadata || {}) as SupabaseUserMetadata;
+    const role = meta.role || 'Customer';
+    const userType = meta.userType || (role === 'Customer' ? 'customer' : role === 'Admin' ? 'admin' : 'employee');
+    return {
+      id: sbUser.id,
+      name: meta.name || (sbUser.email || '').split('@')[0] || 'User',
+      email: sbUser.email || '',
+      userType,
+      role,
+      permissions: rolePermissions[role],
+      avatar: undefined,
+      phone: meta.phone,
+      preferences: userType === 'customer' ? {
+        favoriteCarIds: [],
+        interestedBrands: [],
+        priceRange: { min: 0, max: 100000 }
+      } : undefined
+    };
+  }
 
   const hasPermission = (permission: string) => {
     return user?.permissions.includes(permission) || false;

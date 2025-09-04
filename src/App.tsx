@@ -17,6 +17,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
+import AuthCallback from "./pages/AuthCallback";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () =>
             {/* Auth Routes */}
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             
             {/* User Routes */}
             <Route path="/profile" element={
