@@ -10,6 +10,7 @@ interface User {
   permissions: string[];
   avatar?: string;
   phone?: string;
+  password?: string; // For mock users only - in production, use proper password hashing
   preferences?: {
     favoriteCarIds: string[];
     interestedBrands: string[];
@@ -91,7 +92,8 @@ const seededUsers: User[] = [
   userType: 'admin',
   role: 'Admin',
   permissions: rolePermissions.Admin,
-  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+  password: 'password123'
 },
 // Employee users
 {
@@ -101,7 +103,8 @@ const seededUsers: User[] = [
   userType: 'employee',
   role: 'Manager',
   permissions: rolePermissions.Manager,
-  avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
+  avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+  password: 'password123'
 },
 {
   id: '3',
@@ -110,7 +113,8 @@ const seededUsers: User[] = [
   userType: 'employee',
   role: 'Sales',
   permissions: rolePermissions.Sales,
-  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
+  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+  password: 'password123'
 },
 // Customer users
 {
@@ -122,6 +126,7 @@ const seededUsers: User[] = [
   permissions: rolePermissions.Customer,
   avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face',
   phone: '+1-555-0123',
+  password: 'password123',
   preferences: {
     favoriteCarIds: [],
     interestedBrands: ['Toyota', 'Honda'],
@@ -233,7 +238,13 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
       setIsLoading(false);
       return { success: false, error: 'User not found' };
     }
-    if (password !== 'password123') {
+    // Check the stored password for the user
+    if (foundUser.password && password !== foundUser.password) {
+      setIsLoading(false);
+      return { success: false, error: 'Invalid password' };
+    }
+    // For backward compatibility with seeded users that might not have passwords
+    if (!foundUser.password && password !== 'password123') {
       setIsLoading(false);
       return { success: false, error: 'Invalid password' };
     }
@@ -296,6 +307,7 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
       permissions: rolePermissions.Customer,
       avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face`,
       phone: userData.phone,
+      password: userData.password, // Store the user's chosen password
       preferences: {
         favoriteCarIds: [],
         interestedBrands: [],
@@ -341,7 +353,8 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
       role: userData.role,
       permissions: rolePermissions[userData.role],
       avatar: `https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face`,
-      phone: userData.phone
+      phone: userData.phone,
+      password: userData.password // Store the team member's password
     };
     
     // Add to persistent storage
@@ -379,6 +392,7 @@ export const AuthProvider = ({ children }: {children: ReactNode;}) => {
       permissions: rolePermissions[role],
       avatar: undefined,
       phone: meta.phone,
+      // Don't include password for Supabase users as they handle authentication
       preferences: userType === 'customer' ? {
         favoriteCarIds: [],
         interestedBrands: [],

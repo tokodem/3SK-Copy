@@ -42,19 +42,31 @@ const HomePage = () => {
   {
     name: 'James Ssempala',
     location: 'Kampala',
-    text: 'Excellent service! Got my Toyota Harrier from 3SK Investment and the entire process was smooth. Highly recommended!',
+    text: '3SK Investment made importing my Toyota Harrier from Japan so easy. Their team handled everything from documentation to delivery. The car arrived in perfect condition and exactly as described. I\'ve been driving it for 2 years now with no issues. Highly recommended!',
     rating: 5
   },
   {
     name: 'Grace Nakato',
     location: 'Entebbe',
-    text: 'Professional and reliable. They helped me import my dream car from Japan. Great customer service!',
+    text: 'I was skeptical about importing a car, but 3SK Investment proved me wrong. They provided regular updates throughout the process and the Honda Vezel I got exceeded my expectations. The after-sales support is also excellent. Will definitely use their services again.',
     rating: 5
   },
   {
     name: 'Robert Mubiru',
     location: 'Jinja',
-    text: 'Best prices in town and quality vehicles. Have bought 2 cars from them and planning for a third!',
+    text: 'I\'ve purchased 3 cars from 3SK Investment over the years, and each experience has been outstanding. Their prices are competitive, the quality is top-notch, and their customer service is unmatched. They truly understand the Ugandan market and what we need in our vehicles.',
+    rating: 5
+  },
+  {
+    name: 'Sarah Namukasa',
+    location: 'Mukono',
+    text: 'The financing options at 3SK Investment made it possible for me to get my dream car. The process was transparent, and the terms were very reasonable. My Mazda CX-5 is perfect for my family, and the fuel efficiency is amazing. Thank you, 3SK!',
+    rating: 5
+  },
+  {
+    name: 'Michael Kato',
+    location: 'Masaka',
+    text: 'I needed a reliable car for my business trips to rural areas, and the Subaru Forester from 3SK Investment was the perfect choice. It handles all terrains beautifully, and the maintenance support has been excellent. Great value for money!',
     rating: 5
   }];
 

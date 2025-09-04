@@ -24,10 +24,10 @@ import { Link } from 'react-router-dom';
 
 const About = () => {
   const stats = [
-  { icon: Car, label: 'Cars Imported', value: '1,000+', color: 'text-blue-600' },
-  { icon: Users, label: 'Happy Customers', value: '850+', color: 'text-green-600' },
-  { icon: Globe, label: 'Years Experience', value: '10+', color: 'text-purple-600' },
-  { icon: Award, label: 'Awards Won', value: '5', color: 'text-yellow-600' }];
+  { icon: Car, label: 'Cars Imported', value: '500+', color: 'text-blue-600' },
+  { icon: Users, label: 'Happy Customers', value: '400+', color: 'text-green-600' },
+  { icon: Globe, label: 'Years Experience', value: '8+', color: 'text-purple-600' },
+  { icon: Award, label: 'Customer Satisfaction', value: '98%', color: 'text-yellow-600' }];
 
 
   const values = [

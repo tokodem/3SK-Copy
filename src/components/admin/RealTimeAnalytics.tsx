@@ -40,28 +40,28 @@ const RealTimeAnalytics = () => {
       // Simulate API call delay
       setTimeout(() => {
         const mockData: AnalyticsData = {
-          totalVisitors: Math.floor(Math.random() * 1000) + 2500,
-          uniqueVisitors: Math.floor(Math.random() * 800) + 1800,
-          pageViews: Math.floor(Math.random() * 5000) + 8000,
-          inquiries: Math.floor(Math.random() * 50) + 120,
-          carViews: Math.floor(Math.random() * 300) + 450,
-          revenue: Math.floor(Math.random() * 50000000) + 125000000,
-          conversionRate: parseFloat((Math.random() * 5 + 20).toFixed(1)),
-          avgSessionDuration: `${Math.floor(Math.random() * 3 + 2)}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`,
-          bounceRate: parseFloat((Math.random() * 20 + 30).toFixed(1)),
+          totalVisitors: 3247,
+          uniqueVisitors: 2156,
+          pageViews: 12890,
+          inquiries: 142,
+          carViews: 678,
+          revenue: 187500000,
+          conversionRate: 24.3,
+          avgSessionDuration: '3:45',
+          bounceRate: 42.1,
           topPages: [
-          { page: '/cars', views: Math.floor(Math.random() * 1000) + 2000, percentage: 35.2 },
-          { page: '/', views: Math.floor(Math.random() * 800) + 1500, percentage: 28.8 },
-          { page: '/about', views: Math.floor(Math.random() * 500) + 800, percentage: 15.4 },
-          { page: '/contact', views: Math.floor(Math.random() * 400) + 600, percentage: 12.1 },
-          { page: '/blog', views: Math.floor(Math.random() * 300) + 450, percentage: 8.5 }],
+          { page: '/cars', views: 4532, percentage: 35.2 },
+          { page: '/', views: 3715, percentage: 28.8 },
+          { page: '/about', views: 1987, percentage: 15.4 },
+          { page: '/contact', views: 1559, percentage: 12.1 },
+          { page: '/blog', views: 1097, percentage: 8.5 }],
 
           recentActivity: [
-          { action: 'New inquiry received', timestamp: new Date(Date.now() - Math.random() * 3600000).toISOString(), details: 'Honda Civic 2022' },
-          { action: 'Car listing viewed', timestamp: new Date(Date.now() - Math.random() * 3600000).toISOString(), details: 'Toyota Camry 2021' },
-          { action: 'New user registered', timestamp: new Date(Date.now() - Math.random() * 3600000).toISOString(), details: 'john.doe@email.com' },
-          { action: 'Blog post published', timestamp: new Date(Date.now() - Math.random() * 3600000).toISOString(), details: 'Car Maintenance Tips' },
-          { action: 'Contact form submitted', timestamp: new Date(Date.now() - Math.random() * 3600000).toISOString(), details: 'General inquiry' }],
+          { action: 'New inquiry received', timestamp: new Date(Date.now() - 300000).toISOString(), details: 'James Ssempala - Toyota Harrier' },
+          { action: 'Car listing viewed', timestamp: new Date(Date.now() - 900000).toISOString(), details: 'Honda Vezel 2019' },
+          { action: 'New user registered', timestamp: new Date(Date.now() - 1800000).toISOString(), details: 'grace.nakato@yahoo.com' },
+          { action: 'Blog post published', timestamp: new Date(Date.now() - 3600000).toISOString(), details: 'Welcome to 3SK Investment' },
+          { action: 'Contact form submitted', timestamp: new Date(Date.now() - 5400000).toISOString(), details: 'Financing inquiry' }],
 
           salesData: [
           { month: 'Jan', sales: 12, revenue: 45000000 },
@@ -72,11 +72,11 @@ const RealTimeAnalytics = () => {
           { month: 'Jun', sales: 16, revenue: 55000000 }],
 
           trafficSources: [
-          { source: 'Direct', visits: Math.floor(Math.random() * 800) + 1200, percentage: 42.3 },
-          { source: 'Google', visits: Math.floor(Math.random() * 600) + 900, percentage: 31.8 },
-          { source: 'Facebook', visits: Math.floor(Math.random() * 300) + 400, percentage: 15.2 },
-          { source: 'Instagram', visits: Math.floor(Math.random() * 200) + 250, percentage: 7.4 },
-          { source: 'Other', visits: Math.floor(Math.random() * 100) + 150, percentage: 3.3 }]
+          { source: 'Direct', visits: 1374, percentage: 42.3 },
+          { source: 'Google', visits: 1032, percentage: 31.8 },
+          { source: 'Facebook', visits: 494, percentage: 15.2 },
+          { source: 'Instagram', visits: 241, percentage: 7.4 },
+          { source: 'Other', visits: 106, percentage: 3.3 }]
 
         };
 
