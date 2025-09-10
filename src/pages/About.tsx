@@ -55,22 +55,9 @@ const About = () => {
 
   const team = [
   {
-    name: 'Samuel Kigozi',
+    name: 'Ssali Kafeero John',
     position: 'Founder & CEO',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face',
-    description: 'With over 15 years in the automotive industry, Samuel leads our vision of making quality Japanese vehicles accessible.'
-  },
-  {
-    name: 'Grace Nakamya',
-    position: 'Operations Manager',
-    image: 'https://images.unsplash.com/photo-1503455637927-730bce8583c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTg3MTl8MHwxfHNlYXJjaHwxfHxBJTIwY3JvcHBlZCUyMGltYWdlJTIwb2YlMjBhJTIwcGVyc29uJTJDJTIwZm9jdXNpbmclMjBvbiUyMHRoZWlyJTIwZmFjZSUyQyUyMHdpdGglMjBhJTIwbmV1dHJhbCUyMGJhY2tncm91bmQufGVufDB8fHx8MTc0ODM2NTgxNHww&ixlib=rb-4.1.0&q=80&w=200$w=300',
-    description: 'Grace oversees all operations ensuring smooth import processes and customer satisfaction.'
-  },
-  {
-    name: 'Robert Ssengooba',
-    position: 'Technical Inspector',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face',
-    description: 'Robert ensures every vehicle meets our quality standards through comprehensive technical inspections.'
+    description: 'With over 15 years in the automotive industry, Ssali leads our vision of making quality Japanese vehicles accessible.'
   }];
 
 
@@ -92,7 +79,7 @@ const About = () => {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative container mx-auto px-4 text-center">
           <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-            About <span className="text-yellow-400">3SK Investment</span>
+            About <span className="text-yellow-400">3SK Investment Ltd</span>
           </h1>
           <p className="text-xl lg:text-2xl text-blue-100 max-w-3xl mx-auto mb-8">
             Your trusted partner in importing quality Japanese vehicles to Uganda since 2014.
@@ -134,7 +121,7 @@ const About = () => {
                 Our Story
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                Founded in 2014 by Samuel Kigozi, 3SK Investment Company Ltd. began as a small family business 
+                Founded in 2014 by Ssali Kafeero John, 3SK Investment Company Ltd. began as a small family business 
                 with a simple mission: to make high-quality Japanese vehicles accessible to Ugandans at fair prices.
               </p>
               <p className="text-lg text-gray-600 mb-6">
@@ -211,10 +198,10 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Meet Our Team
+              Meet Our Director
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our dedicated team of professionals is committed to providing you with 
+              Our dedicated director is committed to providing you with 
               exceptional service and expertise.
             </p>
           </div>
