@@ -57,6 +57,7 @@ const About = () => {
   {
     name: 'Ssali Kafeero John',
     position: 'Founder & CEO',
+    image: 'images/cover.png',
     description: 'With over 15 years in the automotive industry, Ssali leads our vision of making quality Japanese vehicles accessible.'
   }];
 
