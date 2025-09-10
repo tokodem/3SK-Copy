@@ -317,7 +317,7 @@ const HomePage = () => {
             
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop"
+                src="images/analytics.jpeg"
                 alt="Car showroom"
                 className="rounded-lg shadow-xl" />
 
