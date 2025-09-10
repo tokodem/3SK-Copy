@@ -101,7 +101,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/30"></div>
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&h=1080&fit=crop')] bg-cover bg-center opacity-30"></div>
+        <div className="absolute inset-0 bg-[url('images/trucks.jpeg')] bg-cover bg-center opacity-30"></div>
         
         <div className="relative container mx-auto px-4 py-24 lg:py-32">
           <div className="max-w-4xl mx-auto text-center space-y-8">
