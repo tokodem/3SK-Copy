@@ -348,6 +348,7 @@ const About = () => {
                     <div>
                       <p className="font-medium">Email</p>
                       <p className="text-gray-600">3skinvestltd@gmail.com</p>
+                      <p className="text-gray-600">johnkafeerossali@gmail.com</p>
                     </div>
                   </div>
                   

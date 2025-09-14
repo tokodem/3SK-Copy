@@ -82,7 +82,7 @@ const Footer = () => {
                 <Mail className="h-5 w-5 text-blue-400" />
                 <div className="text-gray-400 text-sm">
                   <p>3skinvestltd@gmail.com</p>
-                  <p>jhatti22@yahoo.com</p>
+                  <p>johnkafeerossali@gmail.com</p>
                 </div>
               </div>
             </div>

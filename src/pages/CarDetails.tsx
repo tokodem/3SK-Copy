@@ -500,7 +500,7 @@ const CarDetails = () => {
                   <Mail className="h-5 w-5 text-blue-600" />
                   <div>
                     <div className="font-semibold">3skinvestltd@gmail.com</div>
-                    <div className="font-semibold">jhatti22@yahoo.com</div>
+                    <div className="font-semibold">johnkafeerossali@gmail.com</div>
                   </div>
                 </div>
                 
