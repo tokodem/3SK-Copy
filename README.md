@@ -1,4 +1,4 @@
-# Welcome to your EzSite project
+# Welcome to your 3SK Investment Ltd, car sales website project
 
 A clean, modern React template with TypeScript, Vite, TailwindCSS, and ShadCN UI components. This template provides a solid foundation for building web applications with best practices in mind.
 
